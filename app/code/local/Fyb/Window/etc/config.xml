@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fyb_Window>
+            <version>1.0.0</version>
+        </Fyb_Window>
+    </modules>
+
+    <global>
+        <models>
+            <fybwindow>
+                <class>Fyb_Window_Model</class>
+                <resourceModel>fybwindow_resource</resourceModel>
+            </fybwindow>
+
+            <fybwindow_resource>
+                <class>Fyb_Window_Model_Resource</class>
+                <entities>
+                    <tier>
+                        <table>fyb_window_tiers</table>
+                    </tier>
+                </entities>
+            </fybwindow_resource>
+        </models>
+
+        <helpers>
+            <fybwindow>
+                <class>Fyb_Window_Helper</class>
+            </fybwindow>
+        </helpers>
+
+        <blocks>
+            <fybwindow>
+                <class>Fyb_Window_Block</class>
+            </fybwindow>
+        </blocks>
+
+        <resources>
+            <fybwindow_setup>
+                <setup>
+                    <module>Fyb_Window</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </fybwindow_setup>
+            <fybwindow_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </fybwindow_write>
+            <fybwindow_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </fybwindow_read>
+        </resources>
+    </global>
+    <frontend>
+        <routers>
+            <fybwindow>
+                <use>standard</use>
+                <args>
+                    <module>Fyb_Window</module>
+                    <frontName>tiers</frontName>
+                </args>
+            </fybwindow>
+        </routers>
+        <layout>
+            <updates>
+                <fybwindow>
+                    <file>fybwindow.xml</file>
+                </fybwindow>
+            </updates>
+        </layout>
+    </frontend>
+</config>

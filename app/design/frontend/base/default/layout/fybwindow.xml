@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+    <catalog_product_view>
+        <reference name="content">
+            <block type="fybwindow/form" name="fybwindow.tier" template="fybwindow/form.phtml" before="product.description"/>
+        </reference>
+    </catalog_product_view>
+</layout>

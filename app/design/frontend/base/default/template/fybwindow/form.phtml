@@ -1,0 +1,116 @@
+<div class="product-view">
+    <div class="box fybwindow-form" style="float: right;margin: 50px;">
+        <form id="fyb_window_form" name="fyb_window_form" action="<?php echo $this->getFormAction() ?>" method="post">
+            <fieldset class="group-select">
+                <h6>
+                    <?php echo $this->__('Please add width and height (Use Meters)') ?>
+                </h6>
+                <ul>
+                    <li>
+                        <div class="input-box">
+                            <p>
+                                <label for="width">
+                                    <?php echo $this->__('Width') ?>
+                                    <span class="required"></span>
+                                </label>
+                            </p>
+                            <input name="width"
+                                   id="width"
+                                   title="<?php echo $this->__('Width') ?>"
+                                   value=""
+                                   class="required-entry input-text validate-length maximum-length-7 minimum-length-1 validate-number validate-greater-than-zero"
+                                   type="text"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-box">
+                            <p>
+                                <label for="height">
+                                    <?php echo $this->__('Height') ?>
+                                    <span class="required"></span>
+                                </label>
+                            </p>
+                            <input name="height"
+                                   id="height"
+                                   title="<?php echo $this->__('Height') ?>"
+                                   value=""
+                                   class="required-entry input-text validate-length maximum-length-7 minimum-length-1 validate-number validate-greater-than-zero"
+                                   type="text"/>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="button-set">
+                <p class="required">
+                    * <?php echo $this->__('Required Fields') ?>
+                </p>
+                <button class="form-button" type="submit">
+                    <span><?php echo $this->__('Submit') ?></span>
+                </button>
+            </div>
+        </form>
+
+        <p>&nbsp;</p>
+        <table class="data-table tracking-table">
+            <tr>
+                <th><?php echo $this->__('Current Size') ?></th>
+                <th><?php echo $this->__('Current Price Per Square Meter') ?></th>
+            </tr>
+            <tr>
+                <td>
+                    <span class="price-box">
+                        <span class="regular-price">
+                            <span id="new_size" class="price">-</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="price-box">
+                        <span class="regular-price">
+                            <span id="new_price" class="price">-</span>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table tracking-table">
+            <tr>
+                <th><?php echo $this->__('From') ?></th>
+                <th><?php echo $this->__('To') ?></th>
+                <th><?php echo $this->__('Price') ?></th>
+            </tr>
+            <?php $collection = Mage::getModel('fybwindow/tier')->getCollection(); ?>
+            <?php foreach ($collection as $tier): ?>
+                <tr>
+                    <td><?php echo $tier->getData('min_area_size') ?></td>
+                    <td><?php echo $tier->getData('max_area_size') ?></td>
+                    <td><?php echo $tier->getData('price_per_square_meter') ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //&lt;![CDATA[
+    var fyb_window_form = new VarienForm('fyb_window_form');
+
+    Event.observe('fyb_window_form', 'submit', function (event) {
+        if (fyb_window_form.validator.validate()) {
+            $('fyb_window_form').request({
+                onFailure: function () {
+                },
+                onSuccess: function (t) {
+                    var result = t.responseText.evalJSON();
+                    $('new_size').update(result.size);
+                    $('new_price').update(result.pricePerSquareMeter);
+                    $('product-price-1').update('<span class="price">$' + result.price + '</span>');
+                }
+            });
+            Event.stop(event); // stop the form from submitting
+        }
+    });
+    //]]&gt;
+</script>
